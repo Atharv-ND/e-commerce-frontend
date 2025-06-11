@@ -1,0 +1,54 @@
+.why-choose {
+    background-color: #f5f8ff;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  .why-heading {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+  
+  .why-subheading {
+    font-size: 18px;
+    color: #64748b;
+    margin-bottom: 40px;
+  }
+  
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+  }
+  
+  .feature {
+    max-width: 280px;
+  }
+  
+  .icon-circle {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #9333ea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0 8px;
+    color: #0f172a;
+  }
+  
+  .feature p {
+    font-size: 14px;
+    color: #475569;
+  }
+  

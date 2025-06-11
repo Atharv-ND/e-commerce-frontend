@@ -1,0 +1,71 @@
+.grid-container{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    font-size: 22px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.grid-container p{
+    padding: 7px 10px;
+}
+
+.grid-container-2 p{
+    padding: 7px 10px;
+}
+
+
+.grid-container-2{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    font-size: 22px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.box{
+    width: 450px;
+    height: 480px;
+    border: 0.5px solid black;
+    border-radius: 10px;
+    margin-left: 50px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.box h1{
+    font-size: 32px;
+    font-weight: 400;
+    text-align: left;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+.box button{
+    text-align: center;
+    height: 50px;
+    width: 430px;
+    margin-left: 10px;
+    font-size: 24px;
+    color: white;
+    background-color: rgb(51, 0, 205);
+}
+.coupon{
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 15px;
+}
+
+.coupon p{
+    padding-bottom: 5px;
+}
+
+.coupon input{
+    height: 40px;
+    font-size: 20px;
+    padding-left: 10px;
+}
+.coupon button{
+    width: 120px;
+    height: 45px;
+    font-size: 20px;
+    margin-left: 15px;
+}

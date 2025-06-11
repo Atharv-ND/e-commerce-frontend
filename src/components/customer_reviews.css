@@ -1,0 +1,100 @@
+.reviews-section {
+    background-color: #f8fafc;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  .reviews-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0f172a;
+  }
+  
+  .reviews-subtitle {
+    color: #64748b;
+    margin-bottom: 40px;
+  }
+  
+  .slider-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 40px;
+  }
+  
+  .review-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .stars {
+    color: #facc15;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .content {
+    font-style: italic;
+    font-size: 16px;
+    color: #334155;
+    margin-bottom: 20px;
+  }
+  
+  .author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .emoji {
+    font-size: 28px;
+  }
+  
+  .name {
+    font-weight: 600;
+    color: #0f172a;
+  }
+  
+  .role {
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .nav-button {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #475569;
+    transition: color 0.2s;
+  }
+  
+  .nav-button:hover {
+    color: #1d4ed8;
+  }
+  
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #d1fae5;
+    color: #065f46;
+    border-radius: 40px;
+    padding: 10px 24px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .badge-emojis {
+    font-size: 22px;
+  }
+  
