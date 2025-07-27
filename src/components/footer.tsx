@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer">
       <div className="footer-content">
         {/* Brand Info */}
         <div className="footer-section">

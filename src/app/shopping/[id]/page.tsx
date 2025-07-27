@@ -1,9 +1,10 @@
 import {getProducts} from "@/products";
 import type { Product } from "@/components/card";
+import Link from "next/link";
 export default async function Product({
-  params,
+  params
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
   const { id } = await params;
   const {products} = await getProducts();
@@ -45,7 +46,9 @@ export default async function Product({
       >
         {/* You can use Lucide, Heroicons or a Unicode arrow */}
         <span style={{ fontSize: "18px" }}>←</span>
-        <span>Back to Products</span>
+        <Link href="/shopping">
+          <span >Back to Products</span>
+        </Link>
       </div>
     </div>
   );

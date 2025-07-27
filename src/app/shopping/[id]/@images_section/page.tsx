@@ -1,18 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useState} from "react";
 import Image from "next/image";
-import { useProduct } from "../ProductContext";
 
 // Sample images — replace with dynamic product images if available
 const sampleImages = [
-  "/images/iphone_back.jpg",
-  "/images/iphone_front.jpg",
-  "/images/iphone_side.jpg",
+  "/iphone.jpeg",
+  "/iphone_2.jpeg",
+  "/iphone_3.jpeg",
 ];
 
 export default function ImageSection() {
-  const { id } = useProduct();
   const [selectedImage, setSelectedImage] = useState(sampleImages[0]);
+  const images = sampleImages // State for images
+/*
+  // Example of fetching images based on product ID (if applicable)
+  useEffect(() => {
+    async function fetchImages() {
+      // Fetch images based on product ID
+      // const fetchedImages = await fetchImagesByProductId(id);
+      // setImages(fetchedImages);
+    }
+    fetchImages();
+  }, [id]);*/
 
   return (
     <div
@@ -53,7 +62,7 @@ export default function ImageSection() {
           justifyContent: "center",
         }}
       >
-        {sampleImages.map((img, index) => (
+        {images.map((img, index) => (
           <div
             key={index}
             onClick={() => setSelectedImage(img)}
@@ -64,8 +73,8 @@ export default function ImageSection() {
               padding: "4px",
               cursor: "pointer",
               transition: "border 0.2s",
-              width:"100px",
-              height:'100px'
+              width: "100px",
+              height: "100px",
             }}
           >
             <Image

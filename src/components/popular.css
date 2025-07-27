@@ -1,0 +1,35 @@
+.popular-section {
+  padding: 64px 32px;
+  background-color: #f9fafb;
+}
+
+.popular-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.popular-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbars for a cleaner look */
+.popular-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.popular-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.popular-empty {
+  text-align: center;
+  font-size: 1rem;
+  color: #6b7280;
+}

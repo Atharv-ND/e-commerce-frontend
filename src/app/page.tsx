@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import Hero from "@/components/hero";
 import Popular from "@/components/popular";
 import Footer from "@/components/footer";
@@ -10,7 +9,7 @@ export default function Home() {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <main style={{ flex: 1 }}>
-        <Navbar></Navbar>
+        
         <Hero></Hero>
         <Popular></Popular>
         <USP></USP>

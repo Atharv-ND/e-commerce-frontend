@@ -1,29 +1,68 @@
-import "./navbar.css"
-import Image from "next/image"
+import "./navbar.css";
+import Image from "next/image";
 import Link from "next/link";
-export default function Navbar () {
+import { SignInButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+
+export default function Navbar() {
   return (
-    <div className="navbar">
-      <Image src="/globe.svg" alt="Image" width={30} height={30} />
-      <Link href="/" className="home">
-        Home
+    <nav className="navbar">
+      {/* Brand/Logo Section */}
+      <Link href="/" className="navbar-brand">
+        <Image
+          src="/globe.svg"
+          alt="Store Logo"
+          width={32}
+          height={32}
+          priority
+        />
+        <span>ShopHub</span>
       </Link>
-      <Link href="/shopping" className="shop">
-        Products
-      </Link>
-      <Link href="" className="contact-us">
-        Contact Us
-      </Link>
-      <h1 className="sign-in">Sign In</h1>
-      <h1 className="cart">
-        <Link href="/cart">
-          <button type="button" style={{ textDecoration: "none" , color:"white" }}>
-            Cart
-          </button>
+
+      {/* Navigation Links */}
+      <div className="navbar-nav">
+        <Link href="/" className="nav-link">
+          Home
         </Link>
-      </h1>
-    </div>
+        <Link href="/shopping" className="nav-link">
+          Products
+        </Link>
+        <Link href="/categories" className="nav-link">
+          Categories
+        </Link>
+        <Link href="#footer" className="nav-link">
+          Contact Us
+        </Link>
+      </div>
+
+      {/* Auth and Actions Section */}
+      <div className="navbar-actions">
+        <div className="sign-in">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button>Sign In</button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-8 h-8",
+                  userButtonPopoverCard: "bg-white border border-gray-200",
+                  userButtonPopoverActions: "text-gray-700",
+                },
+              }}
+            />
+          </SignedIn>
+        </div>
+
+        <SignedIn>
+          <div className="cart">
+            <Link href="/cart">
+              <button aria-label="Shopping Cart">🛒 Cart</button>
+            </Link>
+          </div>
+        </SignedIn>
+      </div>
+    </nav>
   );
 }
-
-

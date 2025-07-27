@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useProduct } from "../ProductContext";
 import {
@@ -10,20 +9,20 @@ import {
   CartProduct,
 } from "@/cart";
 import { findProduct } from "@/products";
-import { useRouter } from "next/navigation";
 
 export default function ProductDetails() {
   const { id } = useProduct();
-  const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [cart, setCart] = useState<CartProduct[]>([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     async function fetchData() {
-      const productData = await findProduct(id);
+      const {product} = await findProduct(id);
       const cartData = await getCart();
-      setProduct(productData);
+      setProduct(product);
       setCart(cartData);
+      setLoading(false); // Set loading to false after fetching
     }
     fetchData();
   }, [id]);
@@ -35,7 +34,6 @@ export default function ProductDetails() {
   async function refreshCart() {
     const updatedCart = await getCart();
     setCart(updatedCart);
-    router.refresh();
   }
 
   async function add() {
@@ -66,7 +64,7 @@ export default function ProductDetails() {
     }
   }
 
-  if (!product) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>; // Show loading state
 
   return (
     <div

@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import { CartProvider } from "@/app/cart/CartContext";
 export default function CartLayout({
   children,
@@ -11,7 +10,6 @@ export default function CartLayout({
 }) {
   return (
     <div>
-      <Navbar />
       {children}
       <div style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr" }}>
         <CartProvider>

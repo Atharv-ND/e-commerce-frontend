@@ -1,17 +1,13 @@
-import connectMongoDB from "@/libs/mongodb";
-import Product from "./models/products";
-
 export async function getProducts() {
-  const res = await fetch("http://localhost:3000/api/products");
-  const data = await res.json(); // data = { products: [...] }
+  const res = await fetch("http://localhost:3000/api/products?action=getProducts");
+  const data = await res.json();
   return data
 }
 
-
 export async function findProduct(id) {
-  await connectMongoDB();
-  const product = await Product.findOne({
-    product_id: id,
-  });
-  return product;
+  const res = await fetch(
+    `http://localhost:3000/api/products?action=findProduct&id=${id}`
+  );
+  const data = await res.json(); 
+  return data;
 }

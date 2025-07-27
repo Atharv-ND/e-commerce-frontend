@@ -43,15 +43,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const increment = async (id: string) => {
     const currentCart = await getCart();
     const item = currentCart.filter((c: CartProduct)=> c.product_id === id)
-    updateQuantity(id, item.quantity + 1);
+    updateQuantity(id, item[0].quantity + 1);
     sync();
   };
 
   const decrement = async (id: string) => {
     const currentCart = await getCart();
     const item = currentCart.filter((c: CartProduct) => c.product_id === id);
-    if (item.quantity === 1) removeFromCart(id);
-    else updateQuantity(id, item.quantity - 1);
+    if (item[0].quantity === 1) removeFromCart(id);
+    else updateQuantity(id, item[0].quantity - 1);
     sync();
   };
 
