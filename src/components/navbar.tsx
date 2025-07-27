@@ -34,7 +34,6 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* Auth and Actions Section */}
       <div className="navbar-actions">
         <div className="sign-in">
           <SignedOut>
