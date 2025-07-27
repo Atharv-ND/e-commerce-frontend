@@ -1,6 +1,5 @@
 "use client"
 import "./shopping_cart.css"
-import Image from "next/image"
 import { useCart } from "../CartContext";
 import Link from "next/link";
 

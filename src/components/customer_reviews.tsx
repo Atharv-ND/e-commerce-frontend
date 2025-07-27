@@ -49,7 +49,7 @@ export default function CustomerReviews() {
     <section className="reviews-section">
       <h2 className="reviews-title">What Our Customers Say</h2>
       <p className="reviews-subtitle">
-        Don't just take our word for it - hear from our satisfied customers
+        Don&apos;t just take our word for it - hear from our satisfied customers
       </p>
 
       <div className="slider-wrapper">

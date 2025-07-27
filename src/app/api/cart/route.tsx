@@ -6,8 +6,8 @@ import type { CartProduct } from "@/cart";
 export async function GET() {
   try {
     await connectMongoDB();
-    let cart_items = await User.find({ user_id: "1" })
-    let {cart} = cart_items[0]
+    const cart_items = await User.find({ user_id: "1" })
+    const {cart} = cart_items[0]
     return NextResponse.json({ cart }, { status: 200 });
   } catch (error) {
     console.log(error);
