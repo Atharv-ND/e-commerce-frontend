@@ -14,7 +14,7 @@ interface PageProps {
 }
 
 export default async function Shopping({searchParams,}: PageProps) {
-  const { search, brand, category, price, feature } = await searchParams;
+  const { search, brand, category, price, feature } = searchParams || {};
   const {products}= await getProducts()
   let filteredProducts = products
   if(search){
