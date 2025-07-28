@@ -2,11 +2,18 @@ import Card from '@/components/card';
 import ProductFilters from '@/components/ProductFilters';
 import { brands, categories, features} from '@/ProductFiltersData';
 import {getProducts}  from '@/products';
-export default async function Shopping({
-  searchParams,
-}: {
-  searchParams: { search? : string, brand?:string , category?: string ,  price? : string, feature?: string };
-}) {
+
+interface PageProps {
+  searchParams: {
+    search?: string;
+    brand?: string;
+    category?: string;
+    price?: string;
+    feature?: string;
+  };
+}
+
+export default async function Shopping({searchParams,}: PageProps) {
   const { search, brand, category, price, feature } = await searchParams;
   const {products}= await getProducts()
   let filteredProducts = products
