@@ -1,5 +1,6 @@
 "use client"
 import "./hero.css";
+import Image from "next/image";
 
 export default function Hero() {
   const handleShopNow = () => {
@@ -32,12 +33,12 @@ export default function Hero() {
           </button>
         </div>
         <div className="hero-image">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80"
             alt="Modern electronics including smartphones, laptops, and headphones displayed elegantly"
             loading="eager"
-            width="800"
-            height="500"
+            width={800}
+            height={500}
           />
         </div>
       </div>

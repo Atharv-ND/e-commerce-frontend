@@ -11,7 +11,7 @@ export type CartProduct = {
 };
 
 export async function addToCart(product : Product) {
-  const res = await fetch("http://localhost:3000/api/cart", {
+  await fetch("http://localhost:3000/api/cart", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export async function addToCart(product : Product) {
 }
 
 export async function removeFromCart(id: string) {
-  const res = await fetch("http://localhost:3000/api/cart", {
+  await fetch("http://localhost:3000/api/cart", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export async function removeFromCart(id: string) {
 }
 
 export async function clearCart() {
-  const res = await fetch("http://localhost:3000/api/cart", {
+  await fetch("http://localhost:3000/api/cart", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export async function clearCart() {
 }
 
 export async function updateQuantity(id: string, quantity: number) {
-  const res = await fetch("http://localhost:3000/api/cart", {
+  await fetch("http://localhost:3000/api/cart", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

@@ -6,7 +6,7 @@ export default function USP() {
     <section className="why-choose">
       <h2 className="why-heading">Why Choose TechStore?</h2>
       <p className="why-subheading">
-        We're committed to providing the best shopping experience
+        We&apos;re committed to providing the best shopping experience
       </p>
 
       <div className="features">

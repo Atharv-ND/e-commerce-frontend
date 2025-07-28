@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useProduct } from "../ProductContext";
+import { Product } from "@/components/card";
 import {
   getCart,
   addToCart,
@@ -12,7 +13,7 @@ import { findProduct } from "@/products";
 
 export default function ProductDetails() {
   const { id } = useProduct();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [cart, setCart] = useState<CartProduct[]>([]);
   const [loading, setLoading] = useState(true); // Loading state
 
@@ -37,8 +38,10 @@ export default function ProductDetails() {
   }
 
   async function add() {
-    await addToCart(product);
-    await refreshCart();
+    if (product) {
+      await addToCart(product);
+      await refreshCart();
+    }
   }
 
   async function remove() {
@@ -80,11 +83,11 @@ export default function ProductDetails() {
       <div
         style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "10px" }}
       >
-        {product.title}
+        {product ? product.title : ""}
       </div>
 
       <div style={{ fontSize: "16px", color: "#555", marginBottom: "16px" }}>
-        ⭐ {product.rating} (2847 reviews)
+        ⭐ {product ? product.rating : ""} (2847 reviews)
       </div>
 
       <div
@@ -96,7 +99,7 @@ export default function ProductDetails() {
         }}
       >
         <div style={{ fontSize: "32px", fontWeight: "bold", color: "#111827" }}>
-          ₹{(product.price * (1 - product.discount / 100)).toFixed(0)}
+          ₹{product && product.price !== undefined && product.discount !== undefined ? (product.price * (1 - product.discount / 100)).toFixed(0) : ""}
         </div>
         <div
           style={{
@@ -105,7 +108,7 @@ export default function ProductDetails() {
             fontSize: "18px",
           }}
         >
-          ₹{product.price}
+          ₹{product ? product.price : ""}
         </div>
         <div
           style={{
@@ -117,18 +120,18 @@ export default function ProductDetails() {
             borderRadius: "6px",
           }}
         >
-          Save ₹{(product.price * (product.discount / 100)).toFixed(0)}
+          Save ₹{product && product.price !== undefined && product.discount !== undefined ? (product.price * (product.discount / 100)).toFixed(0) : ""}
         </div>
       </div>
 
       <p style={{ fontSize: "16px", color: "#333", marginBottom: "24px" }}>
-        {product.description}
+        {product ? product.description : ""}
       </p>
 
       <div style={{ marginBottom: "24px" }}>
         <p style={{ fontWeight: "600", marginBottom: "8px" }}>Color</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
-          {product.colours.map((color: string) => (
+          {product?.colours.map((color: string) => (
             <button
               key={color}
               style={{
@@ -188,49 +191,49 @@ export default function ProductDetails() {
       </div>
 
       {!incart ? (
-        <button
-          onClick={add}
-          style={{
-            backgroundColor: "#1f2937",
-            color: "white",
-            width: "500px",
-            padding: "12px 24px",
-            borderRadius: "8px",
-            fontSize: "16px",
-            fontWeight: "600",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            border: "none",
-            marginBottom: "12px",
-          }}
-        >
-          🛒 Add to Cart
-        </button>
+          <button
+            onClick={add}
+            style={{
+              backgroundColor: "#1f2937",
+              color: "white",
+              width: "500px",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "600",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              border: "none",
+              marginBottom: "12px",
+            }}
+          >
+            🛒 Add to Cart
+          </button>
       ) : (
-        <button
-          onClick={remove}
-          style={{
-            backgroundColor: "#fef2f2",
-            width: "500px",
-            color: "#b91c1c",
-            padding: "12px 24px",
-            borderRadius: "8px",
-            fontSize: "16px",
-            fontWeight: "600",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            border: "1px solid #fca5a5",
-            marginBottom: "12px",
-          }}
-        >
-          ❌ Remove from Cart
-        </button>
+          <button
+            onClick={remove}
+            style={{
+              backgroundColor: "#fef2f2",
+              width: "500px",
+              color: "#b91c1c",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "600",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              border: "1px solid #fca5a5",
+              marginBottom: "12px",
+            }}
+          >
+            ❌ Remove from Cart
+          </button>
       )}
 
       <button

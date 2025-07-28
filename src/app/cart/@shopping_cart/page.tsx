@@ -2,6 +2,7 @@
 import "./shopping_cart.css"
 import { useCart } from "../CartContext";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ShoppingCart() {
   const { cart, increment, decrement, remove } = useCart();
@@ -19,7 +20,7 @@ export default function ShoppingCart() {
         </div>
         {cart.map((c) => (
           <div className="item" key={c.product_id}>
-            <img src="" alt="Product image" />
+            <Image src={c.image} alt="Product image" width={100} height={100} />
             <div className="details">
               <div className="title">{c.title}</div>
               <div className="price">{c.price}</div>
