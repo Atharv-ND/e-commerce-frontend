@@ -3,43 +3,33 @@ import ProductFilters from '@/components/ProductFilters';
 import { brands, categories, features} from '@/ProductFiltersData';
 import {getProducts}  from '@/products';
 
-interface PageProps {
-  searchParams: {
-    search?: string;
-    brand?: string;
-    category?: string;
-    price?: string;
-    feature?: string;
-  };
-}
-
-export default async function Shopping({searchParams,}: PageProps) {
+export default async function Shopping({searchParams}: {searchParams?: any}) {
   const { search, brand, category, price, feature } = searchParams || {};
   const {products}= await getProducts()
   let filteredProducts = products
-  if(search){
+  if(search && typeof search === "string"){
     if(brands.includes(search)){
-      filteredProducts = filteredProducts.filter((p) => p.brand === search);
+      filteredProducts = filteredProducts.filter((p: { brand: string; }) => p.brand === search);
     }else if(categories.includes(search)){
       filteredProducts = filteredProducts.filter(
-        (p) => p.category === search
+        (p: { category: string; }) => p.category === search
       );
     }else if(features.includes(search)){
-      filteredProducts = filteredProducts.filter((p) => {
+      filteredProducts = filteredProducts.filter((p: { features: string[]; }) => {
         return p.features.includes(search);
       });
     }else{
       filteredProducts = []
     }
   }
-  if(brand){
-    filteredProducts = filteredProducts.filter((p)=> p.brand === brand)
+  if(brand && typeof brand === "string"){
+    filteredProducts = filteredProducts.filter((p: { brand: string; })=> p.brand === brand)
   }
-  if (category) {
-    filteredProducts = filteredProducts.filter((p) => p.category === category);
+  if (category && typeof category === "string") {
+    filteredProducts = filteredProducts.filter((p: { category: string; }) => p.category === category);
   }
-  if (price) {
-    filteredProducts = filteredProducts.filter((p) => {
+  if (price && typeof price === "string") {
+    filteredProducts = filteredProducts.filter((p: { price: number; }) => {
       if(price === "Under 25000"){
         return p.price < 25000
       }else if (price === "25000-50000") {
@@ -51,8 +41,8 @@ export default async function Shopping({searchParams,}: PageProps) {
       }
     });
   }
-  if (feature) {
-    filteredProducts = filteredProducts.filter((p) => {
+  if (feature && typeof feature === "string") {
+    filteredProducts = filteredProducts.filter((p: { features: string[]; }) => {
       return p.features.includes(feature)
     });
   }
