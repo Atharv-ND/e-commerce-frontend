@@ -1,4 +1,3 @@
-"use client";
 import type { Product } from "@/components/card";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 export type CartProduct = {
