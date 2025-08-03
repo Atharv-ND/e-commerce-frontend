@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCart, addToCart, removeFromCart, updateQuantity } from "@/cart";
+import { useAuth } from "@clerk/nextjs";
 import type { CartProduct} from "@/cart";
 import type { Product } from "@/components/card";
 
@@ -14,44 +15,56 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const { getToken } = useAuth();
   const [cart, setCart] = useState<CartProduct[]>([]);
 
+  async function fetchCartWithToken() {
+    const token = await getToken();
+    if (!token) return;
+    const cartData = await getCart(token);
+    setCart(cartData);
+  }
+
   useEffect(() => {
-    async function fetchCart() {
-          const cartData = await getCart();
-          setCart(cartData);
-        }
-        fetchCart();
+    fetchCartWithToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function sync() {
-      const updatedCart = await getCart();
-      setCart(updatedCart);
-    }
+    await fetchCartWithToken();
+  }
 
-  const add = (product: Product) => {
-    addToCart(product);
+  const add = async (product: Product) => {
+    const token = await getToken();
+    if (!token) return;
+    await addToCart(product, token);
     sync();
   };
 
-  const remove = (id: string) => {
-    removeFromCart(id);
+  const remove = async (id: string) => {
+    const token = await getToken();
+    if (!token) return;
+    await removeFromCart(id, token);
     sync();
   };
 
   const increment = async (id: string) => {
-    const currentCart = await getCart();
-    const item = currentCart.filter((c: CartProduct)=> c.product_id === id)
-    updateQuantity(id, item[0].quantity + 1);
+    const token = await getToken();
+    if (!token) return;
+    const currentCart = await getCart(token);
+    const item = currentCart.filter((c: CartProduct) => c.product_id === id);
+    await updateQuantity(id, item[0].quantity + 1, token);
     sync();
   };
 
   const decrement = async (id: string) => {
-    const currentCart = await getCart();
+    const token = await getToken();
+    if (!token) return;
+    const currentCart = await getCart(token);
     const item = currentCart.filter((c: CartProduct) => c.product_id === id);
-    if (item[0].quantity === 1) removeFromCart(id);
-    else updateQuantity(id, item[0].quantity - 1);
+    if (item[0].quantity === 1) await removeFromCart(id, token);
+    else await updateQuantity(id, item[0].quantity - 1, token);
     sync();
   };
 
