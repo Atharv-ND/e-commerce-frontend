@@ -1,7 +1,7 @@
 import "./navbar.css";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButton, SignedIn, SignedOut, ClerkLoaded } from "@clerk/nextjs";
+import { SignInButton, UserButton, SignedIn, SignedOut} from "@clerk/nextjs";
 import SignOutButton from "./SignOutButton";
 
 export default function Navbar() {
@@ -36,26 +36,35 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-actions">
-        <ClerkLoaded>
-          <div className="sign-in">
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button>Sign In</button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <SignOutButton />
-            </SignedIn>
-          </div>
-
+        <div className="sign-in">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button>Sign In</button>
+            </SignInButton>
+          </SignedOut>
           <SignedIn>
-            <div className="cart">
-              <Link href="/cart">
-                <button aria-label="Shopping Cart">🛒 Cart</button>
-              </Link>
-            </div>
+            <UserButton
+              userProfileMode="modal"
+              appearance={{
+                elements: {
+                  avatarBox: "w-8 h-8",
+                  userButtonPopoverCard: "bg-white border border-gray-200",
+                  userButtonPopoverActions: "text-gray-700",
+                  userButtonPopoverFooter: "hidden", // 🚫 Hides the Sign Out option
+                },
+              }}
+            />
+            <SignOutButton></SignOutButton>
           </SignedIn>
-        </ClerkLoaded>
+        </div>
+
+        <SignedIn>
+          <div className="cart">
+            <Link href="/cart">
+              <button aria-label="Shopping Cart">🛒 Cart</button>
+            </Link>
+          </div>
+        </SignedIn>
       </div>
     </nav>
   );
