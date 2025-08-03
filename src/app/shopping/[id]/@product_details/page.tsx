@@ -2,28 +2,20 @@
 import { useState, useEffect } from "react";
 import { useProduct } from "../ProductContext";
 import { Product } from "@/components/card";
-import {
-  getCart,
-  addToCart,
-  updateQuantity,
-  removeFromCart,
-  CartProduct,
-} from "@/cart";
+import { useCart } from "@/app/cart/CartContext";
 import { findProduct } from "@/products";
 
 export default function ProductDetails() {
   const { id } = useProduct();
   const [product, setProduct] = useState<Product | null>(null);
-  const [cart, setCart] = useState<CartProduct[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
+  const { cart, add, remove, increment, decrement } = useCart();
 
   useEffect(() => {
     async function fetchData() {
-      const {product} = await findProduct(id);
-      const cartData = await getCart();
+      const { product } = await findProduct(id);
       setProduct(product);
-      setCart(cartData);
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     }
     fetchData();
   }, [id]);
@@ -32,42 +24,7 @@ export default function ProductDetails() {
   const incart = Boolean(item);
   const quantity = item ? item.quantity : 0;
 
-  async function refreshCart() {
-    const updatedCart = await getCart();
-    setCart(updatedCart);
-  }
-
-  async function add() {
-    if (product) {
-      await addToCart(product);
-      await refreshCart();
-    }
-  }
-
-  async function remove() {
-    await removeFromCart(id);
-    await refreshCart();
-  }
-
-  async function increment() {
-    if (!incart) {
-      await add();
-    } else {
-      await updateQuantity(id, quantity + 1);
-      await refreshCart();
-    }
-  }
-
-  async function decrement() {
-    if (quantity > 1) {
-      await updateQuantity(id, quantity - 1);
-      await refreshCart();
-    } else {
-      await remove();
-    }
-  }
-
-  if (loading) return <div>Loading...</div>; // Show loading state
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div
@@ -80,16 +37,17 @@ export default function ProductDetails() {
         borderRadius: "12px",
       }}
     >
-      <div
-        style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "10px" }}
-      >
+      {/* Product Title */}
+      <div style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "10px" }}>
         {product ? product.title : ""}
       </div>
 
+      {/* Product Rating */}
       <div style={{ fontSize: "16px", color: "#555", marginBottom: "16px" }}>
         ⭐ {product ? product.rating : ""} (2847 reviews)
       </div>
 
+      {/* Price Section */}
       <div
         style={{
           display: "flex",
@@ -124,10 +82,12 @@ export default function ProductDetails() {
         </div>
       </div>
 
+      {/* Description */}
       <p style={{ fontSize: "16px", color: "#333", marginBottom: "24px" }}>
         {product ? product.description : ""}
       </p>
 
+      {/* Color Options */}
       <div style={{ marginBottom: "24px" }}>
         <p style={{ fontWeight: "600", marginBottom: "8px" }}>Color</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
@@ -149,11 +109,12 @@ export default function ProductDetails() {
         </div>
       </div>
 
+      {/* Quantity Controls */}
       <div style={{ marginBottom: "24px" }}>
         <p style={{ fontWeight: "600", marginBottom: "8px" }}>Quantity</p>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <button
-            onClick={decrement}
+            onClick={() => decrement(id)}
             style={{
               padding: "8px 14px",
               border: "1px solid #ccc",
@@ -175,7 +136,7 @@ export default function ProductDetails() {
             {incart ? quantity : 0}
           </span>
           <button
-            onClick={increment}
+            onClick={() => increment(id)}
             style={{
               padding: "8px 14px",
               border: "1px solid #ccc",
@@ -190,52 +151,54 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {!incart ? (
-          <button
-            onClick={add}
-            style={{
-              backgroundColor: "#1f2937",
-              color: "white",
-              width: "500px",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              border: "none",
-              marginBottom: "12px",
-            }}
-          >
-            🛒 Add to Cart
-          </button>
-      ) : (
-          <button
-            onClick={remove}
-            style={{
-              backgroundColor: "#fef2f2",
-              width: "500px",
-              color: "#b91c1c",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              border: "1px solid #fca5a5",
-              marginBottom: "12px",
-            }}
-          >
-            ❌ Remove from Cart
-          </button>
+      {/* Cart Buttons */}
+      {(!incart && (
+        <button
+          onClick={() => product && add(product)}
+          style={{
+            backgroundColor: "#1f2937",
+            color: "white",
+            width: "500px",
+            padding: "12px 24px",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            border: "none",
+            marginBottom: "12px",
+          }}
+        >
+          🛒 Add to Cart
+        </button>
+      )) || (
+        <button
+          onClick={() => remove(id)}
+          style={{
+            backgroundColor: "#fef2f2",
+            width: "500px",
+            color: "#b91c1c",
+            padding: "12px 24px",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            border: "1px solid #fca5a5",
+            marginBottom: "12px",
+          }}
+        >
+          ❌ Remove from Cart
+        </button>
       )}
 
+      {/* Buy Now Button */}
       <button
         style={{
           backgroundColor: "#2563eb",
@@ -254,3 +217,4 @@ export default function ProductDetails() {
     </div>
   );
 }
+
