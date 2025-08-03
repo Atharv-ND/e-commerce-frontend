@@ -1,12 +1,10 @@
-"use client";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-export async function getProducts(token) {
+export async function getProducts() {
   const res = await fetch(BASE_URL + "/api/products?action=getProducts", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
   if (!res.ok) {
@@ -26,14 +24,13 @@ export async function getProducts(token) {
   }
 }
 
-export async function findProduct(id, token) {
+export async function findProduct(id) {
   const res = await fetch(
     BASE_URL + "/api/products?action=findProduct&id=" + id,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     }
   );
