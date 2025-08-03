@@ -1,7 +1,8 @@
 import "./navbar.css";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignInButton, UserButton, SignedIn, SignedOut} from "@clerk/nextjs";
+import SignOutButton from "./SignOutButton";
 
 export default function Navbar() {
   return (
@@ -43,14 +44,17 @@ export default function Navbar() {
           </SignedOut>
           <SignedIn>
             <UserButton
+              userProfileMode="modal"
               appearance={{
                 elements: {
                   avatarBox: "w-8 h-8",
                   userButtonPopoverCard: "bg-white border border-gray-200",
                   userButtonPopoverActions: "text-gray-700",
+                  userButtonPopoverFooter: "hidden", // 🚫 Hides the Sign Out option
                 },
               }}
             />
+            <SignOutButton></SignOutButton>
           </SignedIn>
         </div>
 
