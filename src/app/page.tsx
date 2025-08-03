@@ -1,3 +1,4 @@
+"use client"
 import Hero from "@/components/hero";
 import Popular from "@/components/popular";
 import Footer from "@/components/footer";

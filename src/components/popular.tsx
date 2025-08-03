@@ -1,3 +1,4 @@
+"use client"
 import Card from "./card";
 import { Product } from "./card";
 import { getProducts } from "@/products";

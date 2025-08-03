@@ -1,3 +1,4 @@
+"use client"
 import "./card.css"
 import Link from 'next/link';
 import CartFunction from "./cart_function";
