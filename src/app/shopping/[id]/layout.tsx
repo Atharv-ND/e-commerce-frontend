@@ -1,4 +1,5 @@
 import { ProductProvider } from "./ProductContext";
+import { CartProvider } from "@/app/cart/CartContext";
 import Footer from "@/components/footer";
 export default function productLayout({
   children,
@@ -36,7 +37,9 @@ export default function productLayout({
                 gridTemplateRows: "1fr 1fr",
               }}
             >
-              <div className="info-section">{product_details}</div>
+              <CartProvider>
+                <div className="info-section">{product_details}</div>
+              </CartProvider>
               <div className="features">{features}</div>
             </div>
           </ProductProvider>
