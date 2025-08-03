@@ -1,7 +1,16 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+import { useAuth } from "@clerk/nextjs";
 
 export async function getProducts() {
-  const res = await fetch(BASE_URL + "/api/products?action=getProducts");
+  const { getToken } = useAuth();
+  const token = await getToken();
+  const res = await fetch(BASE_URL + "/api/products?action=getProducts",{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
   if (!res.ok) {
     const text = await res.text();
     console.error("Failed to fetch products:", text);
@@ -18,9 +27,15 @@ export async function getProducts() {
 }
 
 export async function findProduct(id) {
-  const res = await fetch(
-    BASE_URL + "/api/products?action=findProduct&id=" + id
-  );
+  const { getToken } = useAuth();
+  const token = await getToken();
+  const res = await fetch(BASE_URL + "/api/products?action=findProduct&id=" + id , {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
   if (!res.ok) {
     const text = await res.text();
     console.error("Failed to fetch product:", text);
