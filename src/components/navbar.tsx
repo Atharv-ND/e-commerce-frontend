@@ -1,7 +1,8 @@
+"use client";
 import "./navbar.css";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButton, UserButton, SignedIn, SignedOut} from "@clerk/nextjs";
+import { SignInButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
