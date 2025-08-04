@@ -50,7 +50,6 @@ export default function Navbar() {
                   avatarBox: "w-8 h-8",
                   userButtonPopoverCard: "bg-white border border-gray-200",
                   userButtonPopoverActions: "text-gray-700",
-                  userButtonPopoverFooter: "hidden", // 🚫 Hides the Sign Out option
                 },
               }}
             />
