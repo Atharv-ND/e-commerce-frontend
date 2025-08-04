@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProduct } from "../ProductContext";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
 export default function ImageSection() {
   const { id } = useProduct();
   const [images, setImages] = useState<string[]>([]);
@@ -17,7 +19,13 @@ export default function ImageSection() {
       try {
         // Adjust the API endpoint as needed
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+          BASE_URL + "/api/products?action=findProduct&id=" + id,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         if (!res.ok) throw new Error("Failed to fetch product data");
         const product = await res.json();
