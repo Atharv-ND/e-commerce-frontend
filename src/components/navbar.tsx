@@ -2,7 +2,6 @@ import "./navbar.css";
 import Image from "next/image";
 import Link from "next/link";
 import { SignInButton, UserButton, SignedIn, SignedOut} from "@clerk/nextjs";
-import SignOutButton from "./SignOutButton";
 
 export default function Navbar() {
   return (
@@ -54,7 +53,6 @@ export default function Navbar() {
                 },
               }}
             />
-            <SignOutButton></SignOutButton>
           </SignedIn>
         </div>
 
