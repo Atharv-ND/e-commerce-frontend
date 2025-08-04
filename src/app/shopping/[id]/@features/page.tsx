@@ -1,11 +1,46 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useProduct } from "./../ProductContext";
+
 export default function Features() {
-  const features = [
-    "A17 Pro chip for incredible performance",
-    "Pro camera system with 5x Telephoto",
-    "Titanium design - lightweight and durable",
-    "All-day battery life",
-    "iOS 17 with advanced features",
-  ];
+  const { id } = useProduct();
+  const [features, setFeatures] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchFeatures() {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch product data");
+        const product = await res.json();
+        if (
+          product.features &&
+          Array.isArray(product.features) &&
+          product.features.length > 0
+        ) {
+          setFeatures(product.features);
+        } else {
+          setFeatures([]);
+        }
+      } catch (err: any) {
+        setError(err.message || "Error fetching features");
+        setFeatures([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (id) fetchFeatures();
+  }, [id]);
+
+  if (loading) return <div>Loading features...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (!features.length)
+    return <div>No features available for this product.</div>;
 
   return (
     <div
@@ -15,7 +50,7 @@ export default function Features() {
         padding: "20px",
         backgroundColor: "#ffffff",
         maxWidth: "600px",
-        margin: "10px"
+        margin: "10px",
       }}
     >
       <div

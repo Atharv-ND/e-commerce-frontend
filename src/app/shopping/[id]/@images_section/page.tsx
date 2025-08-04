@@ -1,27 +1,57 @@
 "use client";
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-
-// Sample images — replace with dynamic product images if available
-const sampleImages = [
-  "/iphone.jpeg",
-  "/iphone_2.jpeg",
-  "/iphone_3.jpeg",
-];
+import { useProduct } from "../ProductContext";
 
 export default function ImageSection() {
-  const [selectedImage, setSelectedImage] = useState(sampleImages[0]);
-  const images = sampleImages // State for images
-/*
-  // Example of fetching images based on product ID (if applicable)
+  const { id } = useProduct();
+  const [images, setImages] = useState<string[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     async function fetchImages() {
-      // Fetch images based on product ID
-      // const fetchedImages = await fetchImagesByProductId(id);
-      // setImages(fetchedImages);
+      setLoading(true);
+      setError("");
+      try {
+        // Adjust the API endpoint as needed
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch product data");
+        const product = await res.json();
+        // Expecting product.images to be an array of image URLs
+        if (
+          product.images &&
+          Array.isArray(product.images) &&
+          product.images.length > 0
+        ) {
+          setImages(product.images);
+          setSelectedImage(product.images[0]);
+        } else {
+          setImages([]);
+          setSelectedImage("");
+        }
+      } catch (err: any) {
+        setError(err.message || "Error fetching images");
+        setImages([]);
+        setSelectedImage("");
+      } finally {
+        setLoading(false);
+      }
     }
-    fetchImages();
-  }, [id]);*/
+    if (id) fetchImages();
+  }, [id]);
+
+  if (loading) return <div>Loading images...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (!images.length) return <div>No images available for this product.</div>;
+
+  // Move these checks to the top level of the function, after hooks and before return
+  if (loading) return <div>Loading images...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (!images.length) return <div>No images available for this product.</div>;
 
   return (
     <div
@@ -45,13 +75,15 @@ export default function ImageSection() {
           border: "1px solid #ddd",
         }}
       >
-        <Image
-          src={selectedImage}
-          alt="Main product image"
-          width={500}
-          height={500}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        {selectedImage && (
+          <Image
+            src={selectedImage}
+            alt="Main product image"
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        )}
       </div>
 
       {/* Thumbnail Row */}
