@@ -27,11 +27,11 @@ export default function ImageSection() {
             },
           }
         );
-        if (!res.ok) throw new Error("Failed to fetch product data");
         const product = await res.json();
-        console.log(product);
+        setImages(product.images);
+        setSelectedImage(product.images[0]);
         // Expecting product.images to be an array of image URLs
-        if (
+        /*if (
           product.images &&
           Array.isArray(product.images) &&
           product.images.length > 0
@@ -41,7 +41,7 @@ export default function ImageSection() {
         } else {
           setImages([]);
           setSelectedImage("");
-        }
+        }*/
       } catch (err: any) {
         setError(err.message || "Error fetching images");
         setImages([]);
