@@ -1,4 +1,4 @@
-import {getProducts} from "@/products";
+import {findProduct} from "@/products";
 import type { Product } from "@/components/card";
 import Link from "next/link";
 export default async function Product({
@@ -7,8 +7,7 @@ export default async function Product({
   params: { id: string }
 }) {
   const { id } = await params;
-  const {products} = await getProducts();
-  const product = products.find((p : Product) => p.product_id === id);
+  const {product} = await findProduct(id);
   return (
     <div
       style={{
