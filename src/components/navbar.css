@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: 0 40px;
   height: 64px;
-  background: #dbdada;
+  background: #f2f2f2;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
@@ -13,6 +13,7 @@
   align-items: center;
   gap: 10px;
   margin-right: 40px;
+  text-decoration: none;
 }
 
 .navbar-nav {
@@ -25,15 +26,37 @@
 .nav-link {
   color: #222;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 17px;
+  font-weight: bold;
+  font-size: 20px;
   padding: 8px 16px;
   border-radius: 6px;
-  transition: background 0.2s;
+  transition: color 0.2s;
+  position: relative;
+  background: none;
 }
 
 .nav-link:hover {
-  background: #f3f4f6;
+  background: none;
+}
+
+.nav-link::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 4px;
+  height: 3px;
+  background: #2563eb;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .navbar-actions {
@@ -52,11 +75,13 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
 }
 
 .sign-in button:hover {
   background: #000;
+  transform: scale(1.07);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
 
 .cart button {
@@ -68,9 +93,11 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
 }
 
 .cart button:hover {
   background: #000;
+  transform: scale(1.07);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
