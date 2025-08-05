@@ -28,8 +28,9 @@ export default function ImageSection() {
           }
         );
         const product = await res.json();
+        console.log(product.images);
         setImages(product.images);
-        setSelectedImage(product.images[0]);
+        setSelectedImage(images[0]);
         // Expecting product.images to be an array of image URLs
         /*if (
           product.images &&
