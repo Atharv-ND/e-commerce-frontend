@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { useProduct } from "./../ProductContext";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
 export default function Features() {
   const { id } = useProduct();
   const [features, setFeatures] = useState<string[]>([]);
@@ -16,7 +14,9 @@ export default function Features() {
       setError("");
       try {
         const res = await fetch(
-          BASE_URL + "/api/products?action=findProduct&id=" + id,
+          process.env.NEXT_PUBLIC_API_URL +
+            "/api/products?action=findProduct&id=" +
+            id,
           {
             method: "GET",
             headers: {
@@ -26,6 +26,7 @@ export default function Features() {
         );
         if (!res.ok) throw new Error("Failed to fetch product data");
         const product = await res.json();
+        console.log(product);
         if (
           product.features &&
           Array.isArray(product.features) &&
@@ -47,8 +48,9 @@ export default function Features() {
 
   if (loading) return <div>Loading features...</div>;
   if (error) return <div style={{ color: "red" }}>{error}</div>;
-  if (!features.length)
+  if (!features.length){
     return <div>No features available for this product.</div>;
+  }
 
   return (
     <div

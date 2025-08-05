@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProduct } from "../ProductContext";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
 export default function ImageSection() {
   const { id } = useProduct();
   const [images, setImages] = useState<string[]>([]);
@@ -19,7 +17,9 @@ export default function ImageSection() {
       try {
         // Adjust the API endpoint as needed
         const res = await fetch(
-          BASE_URL + "/api/products?action=findProduct&id=" + id,
+          process.env.NEXT_PUBLIC_API_URL +
+            "/api/products?action=findProduct&id=" +
+            id,
           {
             method: "GET",
             headers: {
@@ -29,6 +29,7 @@ export default function ImageSection() {
         );
         if (!res.ok) throw new Error("Failed to fetch product data");
         const product = await res.json();
+        console.log(product);
         // Expecting product.images to be an array of image URLs
         if (
           product.images &&
@@ -52,11 +53,6 @@ export default function ImageSection() {
     if (id) fetchImages();
   }, [id]);
 
-  if (loading) return <div>Loading images...</div>;
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
-  if (!images.length) return <div>No images available for this product.</div>;
-
-  // Move these checks to the top level of the function, after hooks and before return
   if (loading) return <div>Loading images...</div>;
   if (error) return <div style={{ color: "red" }}>{error}</div>;
   if (!images.length) return <div>No images available for this product.</div>;
