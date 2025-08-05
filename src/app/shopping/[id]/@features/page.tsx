@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useProduct } from "./../ProductContext";
+import { findProduct } from "@/products";
 
 export default function Features() {
   const { id } = useProduct();
@@ -13,29 +14,8 @@ export default function Features() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_API_URL +
-            "/api/products?action=findProduct&id=" +
-            id,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!res.ok) throw new Error("Failed to fetch product data");
-        const product = await res.json();
-        console.log(product);
-        if (
-          product.features &&
-          Array.isArray(product.features) &&
-          product.features.length > 0
-        ) {
-          setFeatures(product.features);
-        } else {
-          setFeatures([]);
-        }
+        const {product} = await findProduct(id);
+        setFeatures(product.features);
       } catch (err: any) {
         setError(err.message || "Error fetching features");
         setFeatures([]);

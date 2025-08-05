@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProduct } from "../ProductContext";
+import { findProduct } from "@/products";
 
 export default function ImageSection() {
   const { id } = useProduct();
@@ -16,19 +17,7 @@ export default function ImageSection() {
       setError("");
       try {
         // Adjust the API endpoint as needed
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_API_URL +
-            "/api/products?action=findProduct&id=" +
-            id,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const product = await res.json();
-        console.log(product.images);
+        const {product} = await findProduct(id);
         setImages(product.images);
         setSelectedImage(images[0]);
         // Expecting product.images to be an array of image URLs
