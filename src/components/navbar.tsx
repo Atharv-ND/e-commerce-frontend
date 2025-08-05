@@ -26,7 +26,7 @@ export default function Navbar() {
         <Link href="/shopping" className="nav-link">
           Products
         </Link>
-        <Link href="/categories" className="nav-link">
+        <Link href="/" className="nav-link">
           Categories
         </Link>
         <Link href="#footer" className="nav-link">
