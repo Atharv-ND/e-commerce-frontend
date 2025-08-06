@@ -8,13 +8,17 @@ import "./popular.css";
 export default function Popular() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     getProducts().then(({ products }) => {
       setProducts(products?.filter((p: Product) => p.popular === "yes") || []);
       setLoading(false);
     });
   }, []);
+
+  if (!mounted) return null; // Prevents hydration mismatch
 
   return (
     <section
