@@ -1,14 +1,20 @@
-"use client"
+"use client";
+import { useEffect, useState } from "react";
 import Card from "./card";
 import { Product } from "./card";
 import { getProducts } from "@/products";
 import "./popular.css";
 
-export default async function Popular() {
-  const { products } = await getProducts();
-  const filteredProducts = products?.filter(
-    (p: Product) => p.popular === "yes"
-  );
+export default function Popular() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts().then(({ products }) => {
+      setProducts(products?.filter((p: Product) => p.popular === "yes") || []);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <section
@@ -18,9 +24,11 @@ export default async function Popular() {
     >
       <h2 className="popular-heading">🔥 Popular Products</h2>
 
-      {filteredProducts && filteredProducts.length > 0 ? (
+      {loading ? (
+        <p>Loading...</p>
+      ) : products.length > 0 ? (
         <div className="popular-grid">
-          <Card products={filteredProducts} />
+          <Card products={products} />
         </div>
       ) : (
         <p className="popular-empty">
