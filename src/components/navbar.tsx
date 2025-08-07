@@ -1,9 +1,16 @@
+"use client";
+
 import "./navbar.css";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButton, SignOutButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 export default function Navbar() {
+  const { isSignedIn, isLoaded } = useUser();
+
+  // Prevent UI flicker while Clerk is still loading
+  if (!isLoaded) return null;
+
   return (
     <nav className="navbar">
       {/* Brand/Logo Section */}
@@ -34,14 +41,10 @@ export default function Navbar() {
         </Link>
       </div>
 
+      {/* Action Buttons */}
       <div className="navbar-actions">
-        <div className="sign-in">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button>Sign In</button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
+        {isSignedIn ? (
+          <>
             <SignOutButton redirectUrl="/">
               <button className="sign-out-button">Sign Out</button>
             </SignOutButton>
@@ -50,8 +53,12 @@ export default function Navbar() {
                 <button aria-label="Shopping Cart">🛒 Cart</button>
               </Link>
             </div>
-          </SignedIn>
-        </div>
+          </>
+        ) : (
+          <SignInButton mode="modal">
+            <button className="sign-in-button">Sign In</button>
+          </SignInButton>
+        )}
       </div>
     </nav>
   );
