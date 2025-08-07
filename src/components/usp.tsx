@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function USP() {
   return (
     <section className="why-choose">
-      <h2 className="why-heading">Why Choose TechStore?</h2>
+      <h2 className="why-heading">Our Services</h2>
       <p className="why-subheading">
         We&apos;re committed to providing the best shopping experience
       </p>
