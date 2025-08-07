@@ -7,9 +7,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "rukminim2.flixcart.com",
-        port: "",
-        pathname: "/image/**",
+        hostname: "m.media-amazon.com",
+        pathname: "/**",
       },
     ],
   },

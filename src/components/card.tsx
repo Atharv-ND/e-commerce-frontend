@@ -31,7 +31,7 @@ export default function Card(props : { products : Product[] }) {
           >
             <div className="inner-image">
               <Image
-                src={`${product.images[0]}`}
+                src={product.images[0]}
                 alt="Favourites"
                 width={100}
                 height={100}
