@@ -4,8 +4,8 @@
   justify-content: space-between;
   padding: 0 40px;
   height: 64px;
-  background: #f2f2f2;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .navbar-brand {
@@ -14,6 +14,9 @@
   gap: 10px;
   margin-right: 40px;
   text-decoration: none;
+  color: #222;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .navbar-nav {
@@ -26,19 +29,15 @@
 .nav-link {
   color: #222;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 20px;
-  padding: 8px 16px;
-  border-radius: 6px;
+  font-family: "Fira Sans";
+  padding: 8px 0px;
   transition: color 0.2s;
   position: relative;
   background: none;
 }
-
-.nav-link:hover {
-  background: none;
-}
-
+/*
 .nav-link::after {
   content: "";
   display: block;
@@ -47,17 +46,18 @@
   right: 16px;
   bottom: 4px;
   height: 3px;
-  background: #2563eb;
+  background: #8A5EFF;
   border-radius: 2px;
   opacity: 0;
-  transform: translateY(6px);
+  transform: scaleX(0);
+  transform-origin: center;
   transition: opacity 0.2s, transform 0.2s;
 }
 
 .nav-link:hover::after {
   opacity: 1;
-  transform: translateY(0);
-}
+  transform: scaleX(1.25);
+}*/
 
 .navbar-actions {
   display: flex;
@@ -70,10 +70,11 @@
   background: #222;
   color: #fff;
   border: none;
-  padding: 8px 18px;
+  height: 40px;
+  width: 100px;
   border-radius: 6px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
 }
@@ -81,7 +82,7 @@
 .sign-in button:hover {
   background: #000;
   transform: scale(1.07);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
 }
 
 .cart button {
@@ -99,5 +100,5 @@
 .cart button:hover {
   background: #000;
   transform: scale(1.07);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
 }

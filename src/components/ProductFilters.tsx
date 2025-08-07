@@ -2,17 +2,18 @@
 import "./productFilters.css"
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import {
-  brands,
-  categories,
-  features,
-  priceRanges,
-} from "@/ProductFiltersData";
 
+type FilterOptions = {
+  brands: string[];
+  categories: string[];
+  features: string[];
+  priceRanges: string[];
+};
 
-export default function ProductFilters() {
+export default function ProductFilters({filters} : { filters: FilterOptions }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { brands, categories, features, priceRanges } = filters;
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [brand, setBrand] = useState(searchParams.get("brand") || "");

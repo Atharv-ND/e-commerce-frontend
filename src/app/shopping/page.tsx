@@ -1,12 +1,13 @@
 import Card from '@/components/card';
-import ProductFilters from '@/components/ProductFilters';
-import { brands, categories, features} from '@/ProductFiltersData';
+import { getFilterOptions } from '@/ProductFiltersData'; // ✅ updated
+import ProductFiltersWrapper from "@/components/ProductFiltersWrapper";
 import {getProducts}  from '@/products';
 
 export default async function Shopping({searchParams}: {searchParams?: any}) {
   const { search, brand, category, price, feature } = searchParams || {};
   const {products}= await getProducts()
-  let filteredProducts = products
+  const { brands, categories, features } = await getFilterOptions();
+  let filteredProducts = products;
   if(search && typeof search === "string"){
     if(brands.includes(search)){
       filteredProducts = filteredProducts.filter((p: { brand: string; }) => p.brand === search);
@@ -68,7 +69,7 @@ export default async function Shopping({searchParams}: {searchParams?: any}) {
           Discover our complete collection of premium electronics
         </p>
       </div>
-      <ProductFilters></ProductFilters>
+      <ProductFiltersWrapper></ProductFiltersWrapper>
       <div className="filter-options">
         <Card products={filteredProducts} />
       </div>

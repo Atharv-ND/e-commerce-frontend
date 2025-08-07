@@ -26,7 +26,7 @@ export default function Popular() {
       role="region"
       aria-label="Popular Products"
     >
-      <h2 className="popular-heading">🔥 Popular Products</h2>
+      <h2 className="popular-heading">Popular Categories</h2>
 
       {loading ? (
         <p>Loading...</p>

@@ -4,7 +4,14 @@ const nextConfig = {
     ignoreDuringBuilds: true, // ✅ Prevent Vercel from failing due to lint
   },
   images: {
-    domains: ['images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "rukminim2.flixcart.com",
+        port: "",
+        pathname: "/image/**",
+      },
+    ],
   },
 };
 
