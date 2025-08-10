@@ -2,20 +2,28 @@
 import { useEffect, useState } from "react";
 import Card from "./card";
 import { Product } from "./card";
-import { getProducts } from "@/products";
+import { getPopularProducts } from "@/products";
 import "./popular.css";
 
 export default function Popular() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    getProducts().then(({ products }) => {
-      setProducts(products?.filter((p: Product) => p.popular === "yes") || []);
-      setLoading(false);
-    });
+    getPopularProducts()
+      .then((data) => {
+        setProducts(data); // already only popular from backend
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load popular products.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (!mounted) return null; // Prevents hydration mismatch

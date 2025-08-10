@@ -84,3 +84,27 @@ export async function findProduct(id) {
     throw error;
   }
 }
+
+export async function getPopularProducts() {
+  const res = await fetch(BASE_URL + "/api/products?action=getPopular", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("Failed to fetch popular products:", text);
+    throw new Error(
+      "Failed to fetch popular products: " + res.status + " " + res.statusText
+    );
+  }
+  try {
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    const text = await res.text();
+    console.error("Error parsing JSON:", text);
+    throw error;
+  }
+}
