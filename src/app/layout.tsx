@@ -10,10 +10,10 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000, // cache fresh for 5 minutes
-      cacheTime: 10 * 60 * 1000, // keep cache for 10 minutes after stale
+      gcTime: 10 * 60 * 1000, // keep cache for 10 minutes after stale (renamed from cacheTime in v5)
       refetchOnWindowFocus: false, // optional, avoids auto refetch on window focus
     },
-  } as any,
+  },
 });
 
 const geistSans = Geist({
