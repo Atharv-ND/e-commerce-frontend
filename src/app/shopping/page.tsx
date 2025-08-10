@@ -1,7 +1,7 @@
 import Card from "@/components/card";
 import { getFilterOptions } from "@/ProductFiltersData";
 import ProductFiltersWrapper from "@/components/ProductFiltersWrapper";
-import { getProducts } from "@/products";
+import { fetchProducts } from "@/query";
 
 export default async function Shopping({
   searchParams,
@@ -14,55 +14,19 @@ export default async function Shopping({
   // ✅ Pagination defaults
   const currentPage = parseInt(page) > 0 ? parseInt(page) : 1;
   const perPage = parseInt(limit) > 0 ? parseInt(limit) : 20;
-  const skip = (currentPage - 1) * perPage;
 
-  // ✅ Fetch only paginated products
-  const { products, totalCount } = await getProducts(skip, perPage);
+  // ✅ Fetch from backend with all filters
+  const { products, totalPages } = await fetchProducts({
+    page: currentPage,
+    limit: perPage,
+    search,
+    brand,
+    category,
+    price,
+    feature,
+  });
 
-  const { brands, categories, features } = await getFilterOptions();
-
-  // Filtering
-  let filteredProducts = products;
-
-  if (search && typeof search === "string") {
-    if (brands.includes(search)) {
-      filteredProducts = filteredProducts.filter((p) => p.brand === search);
-    } else if (categories.includes(search)) {
-      filteredProducts = filteredProducts.filter((p) => p.category === search);
-    } else if (features.includes(search)) {
-      filteredProducts = filteredProducts.filter((p) =>
-        p.features.includes(search)
-      );
-    } else {
-      filteredProducts = [];
-    }
-  }
-
-  if (brand && typeof brand === "string") {
-    filteredProducts = filteredProducts.filter((p) => p.brand === brand);
-  }
-
-  if (category && typeof category === "string") {
-    filteredProducts = filteredProducts.filter((p) => p.category === category);
-  }
-
-  if (price && typeof price === "string") {
-    filteredProducts = filteredProducts.filter((p) => {
-      if (price === "Under 25000") return p.price < 25000;
-      if (price === "25000-50000") return p.price >= 25000 && p.price < 50000;
-      if (price === "Above 50000") return p.price >= 50000;
-      return true;
-    });
-  }
-
-  if (feature && typeof feature === "string") {
-    filteredProducts = filteredProducts.filter((p) =>
-      p.features.includes(feature)
-    );
-  }
-
-  // ✅ Pagination UI data
-  const totalPages = Math.ceil(totalCount / perPage);
+  const allFilters = await getFilterOptions();
 
   return (
     <div>
@@ -82,10 +46,10 @@ export default async function Shopping({
         </p>
       </div>
 
-      <ProductFiltersWrapper />
+      <ProductFiltersWrapper allFilters={allFilters} />
 
       <div className="filter-options">
-        <Card products={filteredProducts} />
+        <Card products={products} />
       </div>
 
       {/* ✅ Pagination Controls */}
@@ -98,7 +62,6 @@ export default async function Shopping({
         }}
       >
         {Array.from({ length: totalPages }, (_, i) => {
-          // Copy current filters and set new page
           const params = new URLSearchParams(searchParams);
           params.set("page", (i + 1).toString());
           params.set("limit", perPage.toString());

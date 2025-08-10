@@ -1,7 +1,7 @@
 "use client";
-import "./productFilters.css"
+import "./productFilters.css";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 type FilterOptions = {
   brands: string[];
@@ -10,25 +10,28 @@ type FilterOptions = {
   priceRanges: string[];
 };
 
-export default function ProductFilters({filters} : { filters: FilterOptions }) {
+export default function ProductFilters({
+  allFilters,
+}: {
+  allFilters: FilterOptions;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { brands, categories, features, priceRanges } = filters;
+  const { brands, categories, features, priceRanges } = allFilters;
 
- const [search, setSearch] = useState("");
- const [brand, setBrand] = useState("");
- const [category, setCategory] = useState("");
- const [price, setPrice] = useState("");
- const [feature, setFeature] = useState("");
+  const [search, setSearch] = useState("");
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [feature, setFeature] = useState("");
 
- // Use effect to update after mount
- useEffect(() => {
-   setSearch(searchParams.get("search") || "");
-   setBrand(searchParams.get("brand") || "");
-   setCategory(searchParams.get("category") || "");
-   setPrice(searchParams.get("price") || "");
-   setFeature(searchParams.get("feature") || "");
- }, [searchParams]);
+  useEffect(() => {
+    setSearch(searchParams.get("search") || "");
+    setBrand(searchParams.get("brand") || "");
+    setCategory(searchParams.get("category") || "");
+    setPrice(searchParams.get("price") || "");
+    setFeature(searchParams.get("feature") || "");
+  }, [searchParams]);
 
   const updateFilters = () => {
     const params = new URLSearchParams();
