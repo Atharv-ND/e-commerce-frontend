@@ -36,7 +36,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       try {
         const fetchedCart = await getCart(token);
-        setCart(fetchedCart || []);
+        setCart(fetchedCart.cart || []);
       } catch (error) {
         console.error("Failed to fetch cart:", error);
       }
@@ -50,7 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       await addToCart(product, token);
       const updatedCart = await getCart(token);
-      setCart(updatedCart || []);
+      setCart(updatedCart.cart || []);
     } catch (error) {
       console.error("Failed to add product:", error);
     }

@@ -58,7 +58,7 @@ export async function updateQuantity(
   });
 }
 
-export async function fetchCart(
+export async function getCart(
   token: string
 ): Promise<{ cart: CartProduct[] }> {
   const res = await authFetch(`${BASE_URL}/api/cart`, token, {
