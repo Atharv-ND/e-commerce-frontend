@@ -4,17 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/navbar";
 import { CartProvider } from "./cart/CartContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // cache fresh for 5 minutes
-      gcTime: 10 * 60 * 1000, // keep cache for 10 minutes after stale (renamed from cacheTime in v5)
-      refetchOnWindowFocus: false, // optional, avoids auto refetch on window focus
-    },
-  },
-});
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,14 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <QueryClientProvider client={queryClient}>
+      <Providers>
         <html lang="en">
           <body className={`${geistSans.variable} ${geistMono.variable}`}>
             <Navbar />
             <CartProvider>{children}</CartProvider>
           </body>
         </html>
-      </QueryClientProvider>
+      </Providers>
     </ClerkProvider>
   );
 }
