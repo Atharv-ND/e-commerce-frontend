@@ -37,8 +37,8 @@
 
 .feature:hover {
   transform: scale(1.05);
-  background-color: white;
-  color: black;
+  color: white;
+  background-color: black;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 

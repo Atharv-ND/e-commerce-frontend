@@ -5,42 +5,45 @@ let productsCache = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-export async function getProducts(options = {}) {
+export async function getProducts(params = {}, options = {}) {
   const { forceRefresh = false } = options;
-  
-  // Check cache validity
+
+  // Build query params
+  const query = new URLSearchParams({ action: "getProducts" });
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      query.append(key, String(value));
+    }
+  });
+
+  // Cache check
   const now = Date.now();
-  if (!forceRefresh && productsCache && (now - cacheTimestamp < CACHE_DURATION)) {
+  if (!forceRefresh && productsCache && now - cacheTimestamp < CACHE_DURATION) {
     return productsCache;
   }
 
   try {
-    const res = await fetch(BASE_URL + "/api/products?action=getProducts", {
+    const res = await fetch(`${BASE_URL}/api/products?${query.toString()}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // Add cache headers for Next.js
-      next: { revalidate: 300 } // Revalidate every 5 minutes
+      headers: { "Content-Type": "application/json" },
+      next: { revalidate: 300 }, // For Next.js ISR
     });
-    
+
     if (!res.ok) {
       const text = await res.text();
       console.error("Failed to fetch products:", text);
       throw new Error(
-        "Failed to fetch products: " + res.status + " " + res.statusText
+        `Failed to fetch products: ${res.status} ${res.statusText}`
       );
     }
-    
+
     const data = await res.json();
-    
-    // Update cache
+
     productsCache = data;
     cacheTimestamp = now;
-    
+
     return data;
   } catch (error) {
-    // If cache exists and fetch fails, return cached data
     if (productsCache) {
       console.warn("Failed to fetch fresh products, returning cached data");
       return productsCache;
