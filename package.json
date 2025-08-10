@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.28.1",
+    "@tanstack/react-query": "^5.84.2",
     "dotenv": "^16.5.0",
     "mongoose": "^8.15.2",
     "next": "^15.3.2",
