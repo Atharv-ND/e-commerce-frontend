@@ -12,7 +12,7 @@ export default function Popular() {
 
   if (isLoading) return <p>Loading popular products...</p>;
   if (error) return <p>Error loading popular products</p>;
-
+  console.log(data);
   if (!data?.products?.length) {
     return (
       <p className="popular-empty">
