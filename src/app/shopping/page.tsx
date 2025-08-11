@@ -6,10 +6,21 @@ import { fetchProducts } from "@/query";
 export default async function Shopping({
   searchParams,
 }: {
-  searchParams?: any;
+  searchParams?: Promise<Record<string, string>>;
 }) {
-  const { search, brand, category, price, feature, page, limit } =
-    searchParams || {};
+  // ✅ Await the searchParams
+  const paramsObj = await searchParams;
+
+  // ✅ Safely destructure with defaults
+  const {
+    search = "",
+    brand = "",
+    category = "",
+    price = "",
+    feature = "",
+    page = "1",
+    limit = "20",
+  } = paramsObj || {};
 
   // ✅ Pagination defaults
   const currentPage = parseInt(page) > 0 ? parseInt(page) : 1;
@@ -62,14 +73,19 @@ export default async function Shopping({
         }}
       >
         {Array.from({ length: totalPages }, (_, i) => {
-          const params = new URLSearchParams(searchParams);
-          params.set("page", (i + 1).toString());
-          params.set("limit", perPage.toString());
+          // ✅ Convert paramsObj to string-only entries
+          const safeParams = new URLSearchParams(
+            Object.fromEntries(
+              Object.entries(paramsObj || {}).map(([k, v]) => [k, String(v)])
+            )
+          );
+          safeParams.set("page", (i + 1).toString());
+          safeParams.set("limit", perPage.toString());
 
           return (
             <a
               key={i}
-              href={`?${params.toString()}`}
+              href={`?${safeParams.toString()}`}
               style={{
                 padding: "0.5rem 1rem",
                 border:

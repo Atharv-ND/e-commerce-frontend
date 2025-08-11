@@ -2,7 +2,6 @@
 import "./card.css"
 import Link from 'next/link';
 import CartFunction from "./cart_function";
-import Image from "next/image";
 
 export type Product = {
   title: string;
@@ -30,7 +29,7 @@ export default function Card(props : { products : Product[] }) {
             style={{ textDecoration: "none" }}
           >
             <div className="inner-image">
-              <Image
+              <img
                 src={product.images[0]}
                 alt="Favourites"
                 width={100}
