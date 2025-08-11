@@ -13,7 +13,7 @@ export default function Popular() {
   if (isLoading) return <p>Loading popular products...</p>;
   if (error) return <p>Error loading popular products</p>;
   console.log(data);
-  if (!data?.products?.length) {
+  if (!data?.length) {
     return (
       <p className="popular-empty">
         No popular products available at the moment.
@@ -29,7 +29,7 @@ export default function Popular() {
     >
       <h2 className="popular-heading">Popular Categories</h2>
       <div className="popular-grid">
-        <Card products={data.products} />
+        <Card products={data} />
       </div>
     </section>
   );
