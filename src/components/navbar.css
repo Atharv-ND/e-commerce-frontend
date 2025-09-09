@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: 0 40px;
   height: 64px;
-  background: #0d1117;
+  background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
@@ -27,7 +27,7 @@
 }
 
 .nav-link {
-  color: #fff;
+  color: #222;
   text-decoration: none;
   font-weight: 700;
   font-size: 20px;
@@ -115,3 +115,4 @@
 .sign-out-button:hover {
   background-color: #d32f2f;
 }
+

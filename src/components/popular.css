@@ -1,19 +1,13 @@
 .popular-section {
-  padding: 32px 32px;
-  background-color: #fff;
+  padding: 64px 32px;
+  background-color: #f9fafb;
 }
-.desc{
-  color: #6b7280;
-  font-size: 18px;
-  text-align: center;
-  width: 80%;
-  margin: auto;
-}
+
 .popular-heading {
   font-size: 2rem;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
   text-align: center;
 }
 

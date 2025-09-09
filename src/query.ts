@@ -53,19 +53,9 @@ export async function fetchCart(token: string) {
   const res = await fetch(`${BASE_URL}/api/cart`, {
     credentials: "include",
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      "Authorization": `Bearer ${token}`
+    }
   });
   if (!res.ok) throw new Error("Failed to fetch cart");
   return res.json();
-}
-export async function fetchCategoriesFromProducts(): Promise<{
-  categories: string[];
-}> {
-  const res = await fetch(`${BASE_URL}/api/products?action=getProducts`);
-  if (!res.ok) throw new Error("Failed to fetch products");
-  const { products } = await res.json();
-
-  const categories = [...new Set(products.map((p) => p.category))];
-  return { categories };
 }

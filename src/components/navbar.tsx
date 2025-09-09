@@ -1,57 +1,64 @@
 "use client";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
+
 import "./navbar.css";
-
-const ClerkNavbar = dynamic(() => import("./navbar.clerk"), { ssr: false });
-
-const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+import Image from "next/image";
+import Link from "next/link";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const { isSignedIn, isLoaded } = useUser();
 
-  if (hasClerk) {
-    return <ClerkNavbar />;
-  }
+  // Prevent UI flicker while Clerk is still loading
+  if (!isLoaded) return null;
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">
-        <span className="logo-text">Logo</span>
-      </div>
+      {/* Brand/Logo Section */}
+      <Link href="/" className="navbar-brand">
+        <Image
+          src="/globe.svg"
+          alt="Store Logo"
+          width={32}
+          height={32}
+          priority
+        />
+        <span>ShopHub</span>
+      </Link>
 
+      {/* Navigation Links */}
       <div className="navbar-nav">
-        <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>
+        <Link href="/" className="nav-link">
           Home
         </Link>
-        <Link href="/shopping" className={`nav-link ${pathname.startsWith('/shopping') ? 'active highlighted' : ''}`}>
+        <Link href="/shopping" className="nav-link">
           Products
         </Link>
-        <Link href="/categories" className={`nav-link ${pathname === '/categories' ? 'active' : ''}`}>
+        <Link href="/" className="nav-link">
           Categories
+        </Link>
+        <Link href="#footer" className="nav-link">
+          Contact Us
         </Link>
       </div>
 
+      {/* Action Buttons */}
       <div className="navbar-actions">
-        <button className="sign-out-btn">
-          Sign Out
-        </button>
-        <div className="cart-icon-wrapper">
-          <Link href="/cart" className="cart-link">
-            <Image
-              src="/cart-icon.svg"
-              alt="Shopping Cart"
-              width={48}
-              height={48}
-              className="cart-icon"
-            />
-            <div className="cart-badge">
-              <div className="badge-dot"></div>
+        {isSignedIn ? (
+          <>
+            <SignOutButton redirectUrl="/">
+              <button className="sign-out-button">Sign Out</button>
+            </SignOutButton>
+            <div className="cart">
+              <Link href="/cart">
+                <button aria-label="Shopping Cart">🛒 Cart</button>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </>
+        ) : (
+          <SignInButton mode="modal">
+            <button className="sign-in-button">Sign In</button>
+          </SignInButton>
+        )}
       </div>
     </nav>
   );
