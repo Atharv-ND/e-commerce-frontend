@@ -1,0 +1,39 @@
+/* components/CategoryBlocks.css */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%; /* Adjust width as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px; /* Adjust width as needed */
+    height: 80px; /* Adjust height as needed */
+    margin: 10px; /* Space between blocks */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.logo {
+    width: 50px; /* Adjust logo size as needed */
+    height: auto;
+    margin-right: 30px; /* Space between logo and text */
+}
+
+.category {
+    flex-grow: 1;
+}
+
+.block:hover{
+    transform: scale(1.2);
+}

@@ -1,23 +1,19 @@
 import "./usp.css";
-import Image from "next/image";
 
 export default function USP() {
   return (
     <section className="why-choose">
       <h2 className="why-heading">Our Services</h2>
       <p className="why-subheading">
-        We&apos;re committed to providing the best shopping experience
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore,
+        eius. Eveniet aperiam fugiat vel cum sit enim. Consectetur illo eligendi
+        beatae maiores assumenda ad esse.
       </p>
 
       <div className="features">
         <div className="feature">
           <div className="icon-circle">
-            <Image
-              src="/icons/truck.png"
-              alt="Free Shipping"
-              width={40}
-              height={40}
-            />
+            <span className="icon-emoji">🚚</span>
           </div>
           <h3>Free Shipping</h3>
           <p>
@@ -28,12 +24,7 @@ export default function USP() {
 
         <div className="feature">
           <div className="icon-circle">
-            <Image
-              src="/icons/lock.png"
-              alt="Secure Payment"
-              width={40}
-              height={40}
-            />
+            <span className="icon-emoji">🔒</span>
           </div>
           <h3>Secure Payment</h3>
           <p>
@@ -44,12 +35,7 @@ export default function USP() {
 
         <div className="feature">
           <div className="icon-circle">
-            <Image
-              src="/icons/shield.png"
-              alt="2-Year Warranty"
-              width={40}
-              height={40}
-            />
+            <span className="icon-emoji">🛡️</span>
           </div>
           <h3>2-Year Warranty</h3>
           <p>

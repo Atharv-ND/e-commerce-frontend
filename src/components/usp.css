@@ -1,7 +1,7 @@
 /* usp.css */
 .why-choose {
-  padding: 60px 20px;
-  background-color: #f9f9f9;
+  padding: 30px 20px;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -12,54 +12,60 @@
 }
 
 .why-subheading {
-  font-size: 1.2rem;
+  font-size: 18px;
   color: #555;
   margin-bottom: 40px;
+  padding-bottom: 20px;
+  width: 80%;
+  margin: auto;
 }
 
 .features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between feature blocks */
 }
 
 .feature {
-  background-color: white;
-  color: black;
-  padding: 30px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 280px;
-  transition: all 0.3s ease;
-  text-align: center;
+    background-color: #0d1117; /* Original background color */
+    color: white; /* Text color */
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    height: 200px; /* Adjust width as needed */
+    transition: transform 0.3s ease, background 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .feature:hover {
-  transform: scale(1.05);
-  color: white;
-  background-color: black;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px); /* Move up on hover */
+    background: linear-gradient(90deg, #3b82f6, #a855f7); /* Gradient background on hover */
 }
 
 .icon-circle {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 15px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0; /* Circle background color */
+    border-radius: 50%;
+    width: 50px; /* Circle size */
+    height: 50px; /* Circle size */
+    margin: 0 auto 15px; /* Center the icon and add space below */
 }
 
-.feature h3 {
-  font-size: 1.3rem;
-  margin: 10px 0;
+.icon-emoji {
+    font-size: 24px;
+    display: block;
 }
 
-.feature p {
-  font-size: 0.95rem;
-  color: #444;
-  line-height: 1.4;
+h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 1rem;
+    color: #fff; /* Text color */
 }

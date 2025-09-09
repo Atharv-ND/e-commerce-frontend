@@ -2,7 +2,7 @@
 import "./hero.css";
 import React, { useState, useEffect } from "react";
 
-const backgrounds = ["/bg_1.png", "/bg_2.png", "/bg_3.png", "/bg_4.png"];
+const backgrounds = ["/bg1.png", "/bg2.png", "/bg3.png", "/bg4.png","/bg_5.png","/bg6.png"];
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
@@ -79,20 +79,6 @@ export default function Hero() {
       <button className="nav-button right" onClick={handleRight}>
         ▶
       </button>
-
-      <div className="hero-content">
-        <div className="hero-text">
-          <h1 className="hero-header">Latest Electronics at Best Prices</h1>
-          <p className="hero-description">
-            Discover cutting-edge technology and premium electronics with
-            unbeatable deals. Free shipping on orders over $50. Shop the latest
-            smartphones, laptops, headphones, and more from top brands.
-          </p>
-          <button className="hero-button" onClick={handleShopNow}>
-            Shop Now
-          </button>
-        </div>
-      </div>
     </section>
   );
 }

@@ -1,80 +1,113 @@
 "use client";
-
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import { Star } from "lucide-react";
 import "./customer_reviews.css";
 
-type Review = {
-  stars: number;
-  content: string;
+interface Review {
+  id: number;
   name: string;
-  role: string;
-  emoji: string;
-};
+  review: string;
+  rating: number;
+  image: string;
+}
 
 const reviews: Review[] = [
   {
-    stars: 5,
-    content:"Amazing service and fast delivery! Got my MacBook in just 2 days and it was exactly as described. Highly recommend TechStore!",
-    name: "Sarah Johnson",
-    role: "Verified Buyer",
-    emoji: "👩‍💼",
+    id: 1,
+    name: "Alice",
+    review: "Great experience, very smooth process!",
+    rating: 4,
+    image: "/images/alice.jpg",
   },
   {
-    stars: 5,
-    content:"Best prices I've found anywhere. The customer support team was incredibly helpful when I had questions about my order.",
-    name: "Mike Chen",
-    role: "Tech Enthusiast",
-    emoji: "👨‍💻",
+    id: 2,
+    name: "Bob",
+    review: "Amazing support and quick service.",
+    rating: 5,
+    image: "/images/bob.jpg",
   },
   {
-    stars: 5,
-    content:"Perfect for students! Got a great deal on my iPad and the warranty coverage gives me peace of mind.",
-    name: "Emily Davis",
-    role: "Student",
-    emoji: "👩‍🎓",
+    id: 3,
+    name: "Charlie",
+    review: "Decent experience, could be faster.",
+    rating: 3,
+    image: "/images/charlie.jpg",
+  },
+  {
+    id: 4,
+    name: "Diana",
+    review: "Absolutely loved the customer care.",
+    rating: 5,
+    image: "/images/diana.jpg",
+  },
+  {
+    id: 5,
+    name: "Ethan",
+    review: "Good service overall.",
+    rating: 4,
+    image: "/images/ethan.jpg",
+  },
+  {
+    id: 6,
+    name: "Fiona",
+    review: "Very professional and reliable.",
+    rating: 5,
+    image: "/images/fiona.jpg",
   },
 ];
 
 export default function CustomerReviews() {
-  const [index, setIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [cardWidth, setCardWidth] = useState(200);
 
-  const next = () => setIndex((prev) => (prev + 1) % reviews.length);
-  const prev = () =>
-    setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  // dynamically size cards so 5 fit in one row
+  useEffect(() => {
+    const resize = () => {
+      if (!containerRef.current) return;
+      const containerWidth = containerRef.current.offsetWidth;
+      const gap = 20; // match CSS gap
+      const width = (containerWidth - gap * 4) / 5;
+      setCardWidth(width);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
 
   return (
-    <section className="reviews-section">
-      <h2 className="reviews-title">What Our Customers Say</h2>
-      <p className="reviews-subtitle">
-        Dont just take our word for it - hear from our satisfied customers
-      </p>
-
-      <div className="slider-wrapper">
-        <button className="nav-button left" onClick={prev}>
-          &#8592;
-        </button>
-
-        <div className="review-card">
-          <div className="stars">{"⭐".repeat(reviews[index].stars)}</div>
-          <p className="content">{reviews[index].content}</p>
-          <div className="author">
-            <span className="emoji">{reviews[index].emoji}</span>
-            <div>
-              <div className="name">{reviews[index].name}</div>
-              <div className="role">{reviews[index].role}</div>
+    <div className="reviews">
+      <div className="reviews-desc">
+        <h2 className="reviews-desc-heading">What Our Customers Say</h2>
+        <p className="reviews-desc-text">We value our customers and their feedback. Here are some of the reviews from our satisfied clients.</p>
+      </div>
+      <div className="reviews-wrapper">
+        <div className="reviews-container" ref={containerRef}>
+          {reviews.map((review) => (
+            <div
+              key={review.id}
+              className="review-card"
+              style={{ width: `${cardWidth}px` }}
+            >
+              <div className="review-img">
+                <img src={"/profile.jpeg"} alt={review.name} />
+              </div>
+              <div className="review-name">{review.name}</div>
+              <div className="review-text">{review.review}</div>
+              <div className="stars">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={18}
+                    className={
+                      i < review.rating ? "star-active" : "star-inactive"
+                    }
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-
-        <button className="nav-button right" onClick={next}>
-          &#8594;
-        </button>
       </div>
-
-      <div className="trust-badge">
-        <div className="badge-emojis">🧑‍🤝‍🧑👥👨‍👩‍👧‍👦</div>
-        <p>Trusted by 50,000+ customers</p>
-      </div>
-    </section>
+    </div>
   );
 }

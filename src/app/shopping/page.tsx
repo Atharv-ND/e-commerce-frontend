@@ -1,69 +1,51 @@
-import Card from "@/components/card";
-import { getFilterOptions } from "@/ProductFiltersData";
-import ProductFiltersWrapper from "@/components/ProductFiltersWrapper";
 import { fetchProducts } from "@/query";
+import { getFilterOptions } from "@/ProductFiltersData";
+import Card from "@/components/card";
+import ShoppingClient from "./../../components/ShoppingClient";
 
 export default async function Shopping({
   searchParams,
 }: {
   searchParams?: Promise<Record<string, string>>;
 }) {
-  // ✅ Await the searchParams
   const paramsObj = await searchParams;
 
-  // ✅ Safely destructure with defaults
   const {
     search = "",
-    brand = "",
-    category = "",
+    brands = "",
+    categories = "",
     price = "",
-    feature = "",
+    features = "",
     page = "1",
     limit = "20",
   } = paramsObj || {};
 
-  // ✅ Pagination defaults
   const currentPage = parseInt(page) > 0 ? parseInt(page) : 1;
   const perPage = parseInt(limit) > 0 ? parseInt(limit) : 20;
 
-  // ✅ Fetch from backend with all filters
   const { products, totalPages } = await fetchProducts({
     page: currentPage,
     limit: perPage,
     search,
-    brand,
-    category,
+    brand: brands,
+    category: categories,
     price,
-    feature,
+    feature: features,
   });
 
   const allFilters = await getFilterOptions();
 
   return (
     <div>
-      <div style={{ padding: "1rem 1.5rem" }}>
-        <h2
-          style={{
-            fontSize: "2rem",
-            fontWeight: "700",
-            marginBottom: "0.25rem",
-            color: "#111827",
-          }}
-        >
-          All Products
-        </h2>
-        <p style={{ fontSize: "1rem", color: "#6B7280" }}>
-          Discover our complete collection of premium electronics
-        </p>
-      </div>
+      {/* Sidebar + Apply button handling */}
+      <ShoppingClient allFilters={allFilters} />
 
-      <ProductFiltersWrapper allFilters={allFilters} />
-
+      {/* Product grid */}
       <div className="filter-options">
         <Card products={products} />
       </div>
 
-      {/* ✅ Pagination Controls */}
+      {/* Pagination */}
       <div
         style={{
           display: "flex",
@@ -73,7 +55,6 @@ export default async function Shopping({
         }}
       >
         {Array.from({ length: totalPages }, (_, i) => {
-          // ✅ Convert paramsObj to string-only entries
           const safeParams = new URLSearchParams(
             Object.fromEntries(
               Object.entries(paramsObj || {}).map(([k, v]) => [k, String(v)])

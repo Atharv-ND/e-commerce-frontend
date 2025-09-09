@@ -12,6 +12,7 @@
     "@clerk/nextjs": "^6.28.1",
     "@tanstack/react-query": "^5.84.2",
     "dotenv": "^16.5.0",
+    "lucide-react": "^0.542.0",
     "mongoose": "^8.15.2",
     "next": "^15.3.2",
     "react": "^19.0.0",
@@ -19,8 +20,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/node": "^20.19.13",
+    "@types/react": "^19.1.12",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.8",
